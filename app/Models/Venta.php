@@ -6,20 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Inventario extends Model
+class Venta extends Model
 {
-     protected $guarded = [];
+    
+    protected $guarded = [];
     public $timestamps = false;
 
-    public function marca () : BelongsTo {
-        return $this->belongsTo(Marca::class);
-    }
-
-    public function suplemento () : BelongsTo {
-        return $this->belongsTo(Suplemento::class);
+    public function cliente () : BelongsTo {
+        return $this->belongsTo(Cliente::class);
     }
 
     public function detalleVentas (): HasMany {
         return $this->hasMany(DetalleVenta::class);
     }
+
 }
