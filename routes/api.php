@@ -26,8 +26,8 @@ Route::get('/inventarios/filtros/{filtro}', [InventarioController::class, 'filtr
 
 Route::get('/ventas', [VentaController::class, 'index']); //listado de ventas con sus productos
 Route::get('/ventas/{id}', [VentaController::class, 'show']); //una sola venta
+//Route::post('/ventas', [VentaController::class, 'store']);
 Route::post('/ventas', [VentaController::class, 'store']);
-Route::post('/ventas/pedidos', [VentaController::class, 'listaProductos']);
 
 Route::get('/clientes', [ClienteController::class, 'index']);
 
