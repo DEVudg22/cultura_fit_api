@@ -8,6 +8,7 @@ use App\Models\Cliente;
 use App\Models\Inventario;
 use Illuminate\Http\Request;
 use App\Http\Resources\VentaResource;
+use Illuminate\Support\Facades\DB;
 
 class VentaController extends Controller
 {
@@ -17,35 +18,29 @@ class VentaController extends Controller
         return VentaResource::collection(Venta::with('detalleVentas')->get());
     }
 
-    /*public function store(Request $request) {
-        Venta::create([
-            "fecha" => $request->fecha,
-            "hora" => $request->hora,
-            "cliente_id" => $request->id_cliente
-        ]);
+   
 
-        return response()->json([
-            "success" => "true",
-            "message" => "venta registrada con éxito",
-            "id_venta" => Venta::latest('id')->first()->id
-        ], 201);
-    }*/
-
-    //agregar lista de productos a la venta PENDIENTE
+    //insertar venta (pedidos)
     public function store(Request $request)
     {
-    //FALTA COMPROBAR SI EL CLIENTE YA EXISTE PARA NO DUPLICAR
-    //primero se crea el cliente
-    Cliente::create([
+    DB::beginTransaction();
+    try {
+    //primero se busca el cliente
+    $cliente = Cliente::where('nombre', $request->nombre)->where('paterno', $request->paterno)->where('materno', $request->materno)->get();
+    //si no existe entonces se crea
+    if(count($cliente) == 0){
+        Cliente::create([
             "nombre" => $request->nombre,
             "paterno" => $request->paterno,
             "materno" => $request->materno
         ]);
-    //obtenemos el id del cliente creado
+        //obtenemos el id del cliente creado
         $id_cliente = Cliente::latest('id')->first()->id;
-
+        //si existe entonces se obtiene su id
+    }else{
+        $id_cliente = $cliente[0]->id;
+    }
         //creamos la venta
-
         Venta::create([
             "fecha" => $request->fecha,
             "hora" => $request->hora,
@@ -55,7 +50,7 @@ class VentaController extends Controller
         //obtenemos el id de la venta e insertamos los productos
         $id_venta = Venta::latest('id')->first()->id;
         $listaProductos = $request->input('productos');
-
+        $totalGeneral = 0;
         foreach ($listaProductos as $objeto) {
 
             $inventario = Inventario::find($objeto['id_producto']);
@@ -67,15 +62,25 @@ class VentaController extends Controller
             "cantidad" => $objeto['cantidad'],
             "total_precio" => $objeto['cantidad']*$precio
         ]);
-        }
-        
 
+        //restamos al stock lo que se vendió
+        $inventario->decrement('stock', $objeto['cantidad']);
+        //calculamos el total de toda la venta
+        $totalGeneral += $objeto['cantidad']*$precio;
+        }
+        //insertamos en el campo total general de la tabla ventas el total general
+        Venta::find($id_venta)->update(['total_general' => $totalGeneral]);
+        DB::commit();
         return response()->json([
             "success" => "true",
             "message" => "pedido realizado con éxito",
-            "folio_pedido" => $id_venta
+            "folio_pedido" => $id_venta,
+            "total_general" => $totalGeneral
         ], 201);
-
+    } catch (\Exception $e){
+         DB::rollback();
+        return back()->withErrors(['error' => $e->getMessage()]);
+    }
     }
 
     public function show($id)

@@ -19,6 +19,7 @@ class DetalleVentaResource extends JsonResource
             "marca" => $this->inventario->marca->nombre_marca,
             "suplemento" => $this->inventario->suplemento->nombre_suplemento,
             "presentacion" => $this->inventario->presentacion,
+            "precio_unitario" => $this->inventario->precio,
             "cantidad" => $this->cantidad,
             "total" => $this->total_precio
         ];

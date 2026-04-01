@@ -32,6 +32,7 @@ Route::post('/ventas', [VentaController::class, 'store']);
 Route::get('/clientes', [ClienteController::class, 'index']);
 
 Route::post('/clientes', [ClienteController::class, 'store']);
+Route::post('/clientes/test', [ClienteController::class, 'test']);
 
 
 //cart
