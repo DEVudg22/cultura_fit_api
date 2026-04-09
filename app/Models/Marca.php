@@ -11,6 +11,6 @@ class Marca extends Model
     public $timestamps = false;
 
     public function inventarios () : HasMany {
-        return $this->hasMany(Invenrario::class);
+        return $this->hasMany(Inventario::class);
     }
 }

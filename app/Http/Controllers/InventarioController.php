@@ -57,13 +57,23 @@ class InventarioController extends Controller
             'suplemento_id' => 'sometimes',
             'marca_id' => 'sometimes',
             'presentacion' => 'sometimes',
-            'stock' => 'sometimes',
+            'stock' => 'sometimes' ,
             'descripcion' => 'sometimes',
             'precio' => 'sometimes'
         ]);
 
+        if ($data["stock"]){
+            $data["stock"] += $inventario->stock;
+        }
+
         $inventario->update($data);
-        return response()->json('success', 200);
+        return response()->json([
+            "success" => "true",
+            "message" => "el campo ha sido actualizado con éxito",
+            "status_code" => 200
+            
+
+        ], 200);
 
     }
 
