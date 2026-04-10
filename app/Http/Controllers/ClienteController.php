@@ -27,8 +27,8 @@ public function store (Request $request) {
             "id_cliente" => Cliente::latest('id')->first()->id
         ], 201);
     }
-    //TEST PARA BUSCAR UN CLIENTE EN LA BASE DE DATOS
-    public function test (Request $request) {
+    //método para buscar un cliente por 3 criterios
+    public function searchCliente (Request $request) {
         $cliente = Cliente::where('nombre', $request->nombre)->where('paterno', $request->paterno)->where('materno', $request->materno)->get();
         return response()->json([
             "success" => "true",
