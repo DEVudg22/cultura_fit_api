@@ -7,15 +7,18 @@ use App\Models\Suplemento;
 
 class SuplementoController extends Controller
 {
+    //ver
      public function index () {
         return response()->json(Suplemento::all(), 200);
     }
 
+    //mostrar
     public function show ($id) {
         $suplemento = Suplemento::findOrFail($id);
         return response()->json($suplemento, 200);
     }
 
+    //crear
     public function store (Request $request) {
         Suplemento::create([
             'nombre_suplemento' => $request->nombre_suplemento
@@ -28,6 +31,7 @@ class SuplementoController extends Controller
         ], 201);
     }
 
+    //actualizar
     public function update (Request $request, $id) {
         $suplemento = Suplemento::findOrFail($id);
         $data = $request->validate([
@@ -42,6 +46,7 @@ class SuplementoController extends Controller
         ], 200);
     }
 
+    //eliminar
     public function delete ($id) {
         $suplemento = Suplemento::findOrFail($id);
         $suplemento->delete($id);

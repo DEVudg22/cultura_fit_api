@@ -9,18 +9,18 @@ use Illuminate\Http\Request;
 class MarcaController extends Controller
 {
     
-
+    //Ver
     public function index () {
         return response()->json(Marca::all(), 200);
     }
 
-  
-
+    //mostrar
     public function show ($id) {
         $marca = Marca::findOrFail($id);
         return response()->json($marca, 200);
     }
 
+    //crear
     public function store (Request $request) {
         Marca::create([
             'nombre_marca' => $request->nombre_marca
@@ -33,6 +33,7 @@ class MarcaController extends Controller
         ], 201);
     }
 
+    //actualizar
     public function update (Request $request, $id) {
         $marca = Marca::findOrFail($id);
         $data = $request->validate([
@@ -47,6 +48,7 @@ class MarcaController extends Controller
         ], 200);
     }
 
+    //eliminar
     public function delete ($id) {
         $marca = Marca::findOrFail($id);
         $marca->delete($id);

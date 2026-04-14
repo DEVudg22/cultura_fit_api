@@ -29,7 +29,8 @@ public function store (Request $request) {
     }
     //método para buscar un cliente por 3 criterios
     public function searchCliente (Request $request) {
-        $cliente = Cliente::where('nombre', $request->nombre)->where('paterno', $request->paterno)->where('materno', $request->materno)->get();
+        $cliente = Cliente::where('nombre', $request->nombre)->where('paterno', $request->paterno)
+        ->where('materno', $request->materno)->get();
         return response()->json([
             "success" => "true",
             "message" => "El cliente existe en la base de datos",
