@@ -21,7 +21,8 @@ class InventarioResource extends JsonResource
             "presentacion" => $this->presentacion,
             "stock" => $this->stock,
             "descripcion" => $this->descripcion,
-            "precio" => $this->precio
+            "precio" => $this->precio,
+            "imagen" => $this->imagen
 
         ];
     }
