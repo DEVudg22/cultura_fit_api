@@ -16,7 +16,8 @@ class UserController extends Controller
             'last_name' => $request->last_name,
             'second_surname' => $request->second_surname,
             'email' => $request->email,
-            'password' => Hash::make($request->password)
+            'password' => Hash::make($request->password),
+            'role' => $request->role,
         ]);
         return response()->json(['status' => true, 
         'message' => 'usuario creado con éxito',
