@@ -25,4 +25,8 @@ class Venta extends Model
         return $this->hasManyThrough(Inventario::class, DetalleVenta::class);
     }
 
+    public function estado () : BelongsTo {
+        return $this->belongsTo(Estado::class);
+    }
+
 }
