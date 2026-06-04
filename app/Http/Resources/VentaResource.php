@@ -20,6 +20,7 @@ class VentaResource extends JsonResource
             "fecha" => $this->fecha,
             "hora" => $this->hora,
             "total_general" => $this->total_general,
+            "estado" => $this->estado,
             "productos" => DetalleVentaResource::collection($this->whenLoaded('detalleVentas'))
         ];
     }
