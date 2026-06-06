@@ -44,7 +44,8 @@ class VentaController extends Controller
         Venta::create([
             "fecha" => $request->fecha,
             "hora" => $request->hora,
-            "cliente_id" => $id_cliente
+            "cliente_id" => $id_cliente,
+            "estado_id" => 1
         ]);
 
         //obtenemos el id de la venta e insertamos los productos
