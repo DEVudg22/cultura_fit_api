@@ -33,13 +33,15 @@ class InventarioController extends Controller
         $stock = $request->stock;
         $descripcion = $request->descripcion;
         $precio = $request->precio;
+        $imagen = $request->imagen_url;
         Inventario::create([
             'suplemento_id' => $suplemento,
             'marca_id' => $marca,
             'presentacion' => $presentacion,
             'stock' => $stock,
             'descripcion' => $descripcion,
-            'precio' => $precio
+            'precio' => $precio,
+            'imagen' => $imagen
 
         ]);
 
