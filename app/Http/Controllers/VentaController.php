@@ -93,9 +93,24 @@ class VentaController extends Controller
    
 
    
-    public function update(Request $request, Venta $venta)
-    {
-        //
+    //modificar productos del inventario
+    public function update (Request $request, $id) {
+        $venta = Venta::findOrFail($id);
+        $data = $request->validate([
+            'fecha' => 'sometimes',
+            'hora' => 'sometimes',
+            'estado_id' => 'sometimes',
+        ]);
+
+        $venta->update($data);
+        return response()->json([
+            "success" => "true",
+            "message" => "el campo ha sido actualizado con éxito",
+            "status_code" => 200
+            
+
+        ], 200);
+
     }
 
 

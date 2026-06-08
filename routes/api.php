@@ -30,6 +30,7 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::patch('/suplementos/{id}', [SuplementoController::class, 'update']); //actualizar suplemento
     Route::delete('/suplementos/{id}', [SuplementoController::class, 'delete']); //eliminar suplemento
     Route::get('/ventas', [VentaController::class, 'index']); //listado de ventas con sus productos
+    Route::patch('/ventas/{id}', [VentaController::class, 'update']);//modificar campos de fecha, hora y estado del pedido
     Route::get('/clientes', [ClienteController::class, 'index']); //todos los clientes
     Route::post('/clientes/filtros', [ClienteController::class, 'searchCliente']);
 });
